@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Priority Template</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+    <!-- Required stylesheet -->
+    <link rel="stylesheet" media="screen" href="./deckjs/core/deck.core.css">
+
+    <!-- Extension CSS files go here. Remove or add as needed. -->
+    <link rel="stylesheet" media="screen" href="./deckjs/extensions/goto/deck.goto.css">
+    <link rel="stylesheet" media="screen" href="./deckjs/extensions/menu/deck.menu.css">
+    <link rel="stylesheet" media="screen" href="./deckjs/extensions/navigation/deck.navigation.css">
+    <link rel="stylesheet" media="screen" href="./deckjs/extensions/status/deck.status.css">
+    <link rel="stylesheet" media="screen" href="./deckjs/extensions/scale/deck.scale.css">
+
+    <!-- Style theme. More available in /themes/style/ or create your own. -->
+    <link rel="stylesheet" media="screen" href="./deckjs/themes/style/swiss.css">
+    <!-- <link rel="stylesheet" media="screen" href="http://localhost:5555/includes/themes/style/web-2.0.css"> -->
+
+    <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+    <link rel="stylesheet" media="screen" href="./deckjs/themes/transition/horizontal-slide.css">
+
+    <!-- Basic black and white print styles -->
+    <link rel="stylesheet" media="print" href="./deckjs/core/print.css">
+
+
+    <link rel="stylesheet" media="screen" href="./css/app.css">
+    <!-- Required Modernizr file -->
+    <script src="./deckjs/modernizr.custom.js"></script>
+
+</head>
+
+<body>
+<div class="deck-container">
+
+    <section class="slide">
+        <h1>Priority Web SDK - How?</h1>
+    </section>
+
+    <section class="slide">
+        <h2>Login</h2>
+
+        <p>First we need to login:</p>
+        <div class="slide">
+            <code class="javascript">
+               function Login() 
+               {
+                 var config = {
+                   url: '',
+                   tabulaini: 'tabdev.ini',
+                   language: 1,
+                   company: 'test',
+                   username: 'נעמיפ',
+                   password: ''
+                 };
+                 login(config).then(
+                 ()=>
+                 {
+                    console.log('You\'re successfully logged in! Have fun using this awsome SDK' );
+                 }).catch(
+                 (err) =>
+                 {
+                    console.log('Login failed: ' + err.message);
+                 });
+                 return 'Login status => ';
+               }
+               Login();
+            </code>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h2>StartForm</h2>
+
+        <p>This is how we start a form in Priority: </p>
+        <div class="slide">
+            <code class="javascript" data-async-code="true">
+               var MyForm;
+               var onMessagesCallback = function(response)
+               {
+                   alert(response.message);
+               }
+               var onUpdatesCallback = function(update)
+               {
+                   console.log('There was an update: ');
+                   console.log(update);
+               }
+               function startForm() 
+               {
+                  console.log('Form => ');
+                  formStart('ORDERS',onMessagesCallback,onUpdatesCallback,'test',1).then(
+                  (form)=>
+                  {
+                    myForm = form;//so we could use it later
+                    console.log(form);
+                  }).catch(
+                  (err)=>
+                  {
+                    console.log(err.message);
+                  });
+                return '';
+               }
+               startForm();
+            </code>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h2>Get rows</h2>
+
+        <p>And now let's get some rows: </p>
+        <div class="slide">
+            <code class="javascript">
+               var myRows;
+               function getRows() 
+               {
+                  myForm.getRows(1).then(
+                  (rows)=>
+                  {
+                    myRows = rows[myForm.name];
+                    console.log(rows);
+                  }).catch(
+                  (err)=>
+                  {
+                    console.log(err.message);
+                  });
+                return 'Rows => ';
+               }
+               getRows();
+            </code>
+        </div>
+    </section>
+    <section class="slide">
+        <h2>Open Choose and Update</h2>
+
+        <p>Then update a row with a choose value: </p>
+
+        <div class="slide">
+            <code class="javascript">
+               var activeRow;
+               function setActive(rowIndex) 
+               {
+                 myForm.setActiveRow(rowIndex).then(
+                 ()=>
+                 {
+                   activeRow = myRows[rowIndex];
+                   console.log(activeRow);
+                 }).catch(
+                 (err) =>
+                 {
+                   console.log(err);
+                 });
+                 return 'Row => ';
+               }
+               setActive(2);
+            </code>
+            <br/>
+            </div>
+            <div class="slide">
+             <code class="javascript">
+               function openChoose() 
+               {
+                 myForm.choose('CODE', activeRow['CODE']).then(
+                 (choose) =>
+                 {
+                   console.log(choose);
+                 }).catch(
+                 (err) =>
+                 {
+                   console.log(err);
+                 });
+                 return 'Choose => ';
+               }
+               openChoose();
+            </code>
+            <br/>
+            </div>
+            <div class="slide">
+             <code class="javascript">
+               //setActive(1);
+               myForm.fieldUpdate('CODE', '');
+               //myForm.undo();
+               //myForm.saveRow();
+            </code>
+            <br/>
+            <a href="#slide-4">Check updates</a>
+        </div>
+    </section>
+    <section class="slide">
+        <h2>Subforms</h2>
+
+        <p>At least we could add a new subform row: </p>
+        
+        <div class="slide">
+            <code class="javascript">
+               var MySubform;
+               function startSubform() 
+               {
+                   myForm.startSubForm('ORDERITEMS').then(
+                   (subform)=>
+                   {
+                     mySubform = subform;
+                     console.log(subform);
+                   }).catch(
+                   (err)=>
+                   {
+                     console.log(err.message);
+                   });
+                 return 'Subform => ';
+               }
+               startSubform();
+            </code>
+            <br/>
+        </div>
+        <div class="slide">
+            <code class="javascript">
+               function addRow() 
+               {
+                   mySubform.newRow().then(
+                   () =>
+                   {
+                     mySubform.fieldUpdate('PARTNAME', '111-111');//מק"ט
+                     mySubform.fieldUpdate('TQUANT', '20');//כמות
+                     mySubform.fieldUpdate('DUEDATE', new Date().toISOString());//תאריך אספקה
+                     mySubform.fieldUpdate('PRICE', '234.66');//מחיר
+                   }).then(
+                   () =>
+                   {
+                     mySubform.saveRow();
+                     console.log('new ro added!');
+                     mySubform.endCurrentForm();
+                   }).catch(
+                   (err)=>
+                   {
+                     console.log(err.message);
+                   });
+                 return '';
+               }
+               addRow();
+            </code>
+            <br/>
+            <a href="#slide-4">Check updates</a>
+        </div>
+    </section>
+    <section class="slide">
+        <h2>End Form</h2>
+
+        <p>But don't forget to end the form: </p>
+        <div class="slide">
+            <code class="javascript">
+               function endForm() 
+               {
+                   myForm.endCurrentForm().then(
+                   ()=>
+                   {
+                     alert('THE END!!!!')
+                   }).catch(
+                   (err)=>
+                   {
+                     console.log(err.message);
+                   });
+                 return '';
+               }
+               endForm();
+            </code>
+        </div>
+    </section>
+    </div>
+    <script>
+         
+        window.priorityReady=function (){};
+        var script=document.createElement('script');
+        script.src="./priorityapp/priorityapp.nocache.js";
+        script.onload=function()
+        {
+            setTimeout(function()
+            {
+            window.klipse_settings = 
+            {
+              selector_eval_js: '.javascript', // css selector for the html elements you want to klipsify
+              eval_idle_msec: 10000000,
+              codemirror_options_in: {
+                lineWrapping: true
+              },
+              codemirror_options_out: {
+                lineWrapping: true
+              }
+            };
+
+            $(function() {
+                $.deck('.slide', {
+                    countNested: false
+                });
+            });
+
+            var klipseScript=document.createElement('script');
+            klipseScript.src="https://storage.googleapis.com/app.klipse.tech/plugin_prod/js/klipse_plugin.min.js";
+            document.body.appendChild(klipseScript);
+            },10);
+            
+        };
+        document.body.appendChild(script);
+    </script>
+
+    <!-- Required JS files. -->
+    <script src="./deckjs/jquery.min.js"></script>
+    <script src="./deckjs/core/deck.core.js"></script>
+
+    <!-- Extension JS files. Add or remove as needed. -->
+    <script src="./deckjs/extensions/menu/deck.menu.js"></script>
+    <script src="./deckjs/extensions/status/deck.status.js"></script>
+
+    <script>
+    
+    </script>
+
+</body>
+
+</html>

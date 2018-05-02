@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Priority Template</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+
+</head>
+
+<body>
+
+    <code class="javascript">
+              function Login() 
+{
+  var config = {
+    url: 'https://dev.eshbel.com',
+    tabulaini: 'tabdev.ini',
+    language: 1,
+    company: 'test',
+    username: 'נעמי',
+    password: '123456'
+  };
+  login(config).then(
+    ()=>
+    {
+      var form1;
+      //console.log('You\'re successfully logged in! Have fun using this awsome API' );
+      formStart("CUSTOMERS",()=>{},()=>{},"test",1).then(
+        form=>{
+          form1=form;
+          return form.getRows(1);
+        })
+        .then(rows=>{
+         // console.log(rows);
+          return form1.setActiveRow(2);
+        })
+        .then(res=>console.log(res))
+       .catch(error=>console.log("error"+error));
+    })
+     .catch(error=>console.log("error"+error));;
+  return 'Result => ';
+}
+Login();
+            </code>
+
+    <script>
+        window.priorityReady = function () { };
+        var script = document.createElement('script');
+        script.src = "./priorityapp/priorityapp.nocache.js";
+        script.onload = function () {
+            setTimeout(function () {
+                window.klipse_settings =
+                    {
+                        selector_eval_js: '.javascript', // css selector for the html elements you want to klipsify
+                    };
+
+                var klipseScript = document.createElement('script');
+                klipseScript.src = "https://storage.googleapis.com/app.klipse.tech/plugin_prod/js/klipse_plugin.min.js";
+                document.body.appendChild(klipseScript);
+            }, 10);
+
+        };
+        document.body.appendChild(script);
+    </script>
+
+</body>
+
+</html>

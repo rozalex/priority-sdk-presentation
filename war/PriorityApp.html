@@ -1,0 +1,246 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the     -->
+<!-- browser's rendering engine into                -->
+<!-- "Standards Mode". Replacing this declaration   -->
+<!-- with a "Quirks Mode" doctype is not supported. -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    <link type="text/css" rel="stylesheet" href="PriorityApp.css">
+
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    <script type="text/javascript" language="javascript" src="priorityapp/priorityapp.nocache.js"></script>
+    <script type="application/javascript" src="js/jquery.min.js"></script>
+    <script>
+               
+    /** 
+    * Called when GWT has loaded and API can be used.     
+    */
+    function JavaLoaded() {
+    	PriInit("tabula", //user name
+    	"Devel4All", //pwd    	
+    	"MyPhoneName", //name of phone
+    	"", //name of windows user (empty)
+    	function onSuccess(allForms) {   // myForm represents the newly opened form instead of looking for it in global data.
+    		
+    		var test = 4;
+    		
+    		if (test == 1) {
+    			test1();	    		
+			}		
+			else if (test == 2) {
+				test2();
+			}
+			else if (test == 3) {
+				test3();
+			}
+			else if (test == 4) {
+				test4();
+			}
+		},     	
+  		function onError(error) {  			
+  		});
+    }
+    
+    function test1() {
+    	
+    	FormStart("ORDERS", 
+		function onSuccess(form, data) {   // myForm represents the newly opened form instead of looking for it in global data.
+  			
+  			form.GetRows(1, 
+			function onSuccess(data1) {
+		
+				form.StartSubForm("ORDERITEMS", 
+				function onSuccess(data2) {
+	    			
+	    			form.GetRows(130, 
+					function onSuccess(data3) {
+						
+						form.FieldUpdate("PRICE", "140.0", 
+						function onSuccess(data4) {
+						
+							form.SaveRow(
+							function onSuccess(data5) {
+							
+							},
+							function onError(error, isFatal) {
+							});	
+						},
+						function onError(error, isFatal) {
+						});
+					},
+					function onError(error, isFatal) {
+  						});					    			 
+	    		},
+	    		function onError(error, isFatal) {
+	    		});    			 
+    		},
+    		function onError(error, isFatal) {
+    		},
+    		null);     			 	   		
+		}, 
+		function onError(error) { 			
+		});
+    }
+     
+    function test2() {
+    	
+    	FormStart("ORDERS", 
+		function onSuccess(form, data) {   // myForm represents the newly opened form instead of looking for it in global data.
+  			
+  			form.GetRows(1, 
+			function onSuccess(data1) {
+		
+				form.StartSubForm("ORDERITEMS", 
+				function onSuccess(data2) {
+	    			
+	    			form.NewRow( 
+					function onSuccess(data3) {
+		    			
+		    				form.FieldUpdate("PARTNAME", "001", 
+							function onSuccess(data4) {
+							
+								form.FieldUpdate("DUEDATE", "01/08/16", 
+								function onSuccess(data5) {
+								
+									form.FieldUpdate("TQUANT", "1", 
+									function onSuccess(data6) {
+									
+										form.SaveRow(1, 
+										function onSuccess(data7) {
+											
+											form.EndCurrentForm(
+											function onSuccess(data8) {
+												
+											},
+											function onError(error, isFatal) {
+											});
+										},
+										function onError(error, isFatal) {
+										});
+									},
+									function onError(error, isFatal) {
+									});
+								},
+								function onError(error, isFatal) {
+								});	
+							},
+							function onError(error, isFatal) {
+							});			    			 
+		    		},
+		    		function onError(error, isFatal) {
+		    		});				    			 
+	    		},
+	    		function onError(error, isFatal) {
+	    		});    			 
+    		},
+    		function onError(error, isFatal) {
+    		},
+    		null);     			 	   		
+		}, 
+		function onError(error) { 			
+		});
+    }
+     
+     function test3() {
+    	
+    	FormStart("ORDERS", 
+		function onSuccess(form, data) {   // myForm represents the newly opened form instead of looking for it in global data.
+  			
+  			form.GetRows(1, 
+			function onSuccess(data1) {
+				
+				form.FieldUpdate("PERCENT", "40.0", 
+				function onSuccess(data1) {
+					
+					form.Undo(
+					function onSuccess(data5) {
+					
+						form.SaveRow(0,
+						function onSuccess(data5) {
+						
+						},
+						function onError(error, isFatal) {
+						});
+					},
+					function onError(error, isFatal) {
+					});			    			 
+	    		},
+	    		function onError(error, isFatal) {
+	    		},
+	    		null);				    			 
+    		},
+    		function onError(error, isFatal) {
+    		},
+    		null);     			 	   		
+		}, 
+		function onError(error) { 			
+		});
+    }
+       
+       
+    function test4() {
+    	
+    	FormStart("ORDERS", 
+		function onSuccess(form, data) {   // myForm represents the newly opened form instead of looking for it in global data.
+  			
+  			form.GetRows(1, 
+			function onSuccess(data1) {
+				
+				form.StartSubForm("ORDERITEMS", 
+				function onSuccess(data2) {
+				
+					form.GetRows(141, 
+					function onSuccess(data2) {
+					
+						form.DelRow( 
+						function onSuccess(data2) {
+						
+							
+						},
+						function onError(error, isFatal) {
+		    			});
+					},
+					function onError(error, isFatal) {
+	    			});
+				},
+				function onError(error, isFatal) {
+    			});
+								    			 
+    		},
+    		function onError(error, isFatal) {
+    		},
+    		null);     			 	   		
+		}, 
+		function onError(error) { 			
+		});
+    }                  
+        </script>
+  </head>
+
+  <!--                                           -->
+  <!-- The body can have arbitrary html, or      -->
+  <!-- you can leave the body empty if you want  -->
+  <!-- to create a completely dynamic UI.        -->
+  <!--                                           -->
+  <body>
+
+    <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
+    <noscript>
+      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+      </div>
+    </noscript>
+    
+  </body>
+</html>

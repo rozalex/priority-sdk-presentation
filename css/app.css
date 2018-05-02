@@ -1,0 +1,7 @@
+.slide .CodeMirror:not(:first-child) .CodeMirror-scroll {
+	max-height: 400px;
+}
+
+.deck-container {
+	overflow: visible;
+}
